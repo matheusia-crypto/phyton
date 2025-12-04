@@ -1,0 +1,1909 @@
+<!doctype html>
+<html lang="pt-BR">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso Interativo de Python</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #e2e8f0;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    html {
+      height: 100%;
+    }
+
+    .course-wrapper {
+      width: 100%;
+      min-height: 100%;
+      padding: 20px;
+    }
+
+    .course-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .header-section {
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+      border-radius: 20px;
+      padding: 35px;
+      margin-bottom: 25px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    .course-title {
+      font-size: 42px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .course-subtitle {
+      font-size: 18px;
+      color: #dbeafe;
+      font-weight: 500;
+    }
+
+    .progress-bar-section {
+      background: #1e293b;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #94a3b8;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 14px;
+      background: #0f172a;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+      border-radius: 10px;
+      transition: width 0.5s ease;
+      width: 0%;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 25px;
+      margin-bottom: 25px;
+    }
+
+    .sidebar {
+      background: #1e293b;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      height: fit-content;
+      position: sticky;
+      top: 20px;
+    }
+
+    .sidebar-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #3b82f6;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #334155;
+    }
+
+    .lesson-list {
+      list-style: none;
+    }
+
+    .lesson-item {
+      margin-bottom: 10px;
+    }
+
+    .lesson-btn {
+      width: 100%;
+      text-align: left;
+      padding: 14px 16px;
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Inter', sans-serif;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lesson-btn:hover {
+      background: #334155;
+      border-color: #3b82f6;
+    }
+
+    .lesson-btn.active {
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+      color: white;
+      border-color: #3b82f6;
+    }
+
+    .lesson-btn.completed {
+      border-color: #10b981;
+    }
+
+    .lesson-status {
+      margin-left: auto;
+      font-size: 16px;
+    }
+
+    .main-content {
+      background: #1e293b;
+      border-radius: 20px;
+      padding: 35px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      min-height: 600px;
+    }
+
+    .lesson-header {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #334155;
+    }
+
+    .lesson-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: #3b82f6;
+      margin-bottom: 8px;
+    }
+
+    .lesson-description {
+      font-size: 16px;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .code-block {
+      background: #0f172a;
+      border-radius: 12px;
+      padding: 20px;
+      border: 2px solid #334155;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #334155;
+    }
+
+    .code-language {
+      font-size: 14px;
+      font-weight: 700;
+      color: #3b82f6;
+    }
+
+    .python-header {
+      color: #fbbf24;
+    }
+
+    .code-content {
+      font-family: 'Fira Code', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #e2e8f0;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    .explanation-box {
+      background: #0f172a;
+      border-left: 4px solid #10b981;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+
+    .explanation-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #10b981;
+      margin-bottom: 12px;
+    }
+
+    .explanation-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #cbd5e1;
+    }
+
+    .key-points {
+      background: #0f172a;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 25px;
+    }
+
+    .key-points-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f59e0b;
+      margin-bottom: 15px;
+    }
+
+    .key-points-list {
+      list-style: none;
+    }
+
+    .key-point-item {
+      padding: 12px 0;
+      padding-left: 30px;
+      position: relative;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #cbd5e1;
+      border-bottom: 1px solid #334155;
+    }
+
+    .key-point-item:last-child {
+      border-bottom: none;
+    }
+
+    .key-point-item:before {
+      content: "▸";
+      position: absolute;
+      left: 10px;
+      color: #f59e0b;
+      font-weight: 700;
+    }
+
+    .lesson-actions {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 16px 28px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+    }
+
+    .btn-secondary {
+      background: #334155;
+      color: white;
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: #475569;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .welcome-screen {
+      text-align: center;
+      padding: 40px;
+    }
+
+    .welcome-icon {
+      font-size: 80px;
+      margin-bottom: 25px;
+    }
+
+    .welcome-title {
+      font-size: 36px;
+      font-weight: 800;
+      color: #3b82f6;
+      margin-bottom: 20px;
+    }
+
+    .welcome-description {
+      font-size: 18px;
+      line-height: 1.8;
+      color: #cbd5e1;
+      margin-bottom: 30px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 35px;
+    }
+
+    .feature-card {
+      background: #0f172a;
+      border-radius: 12px;
+      padding: 25px;
+      border: 2px solid #334155;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .feature-card:hover {
+      border-color: #3b82f6;
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      font-size: 40px;
+      margin-bottom: 15px;
+    }
+
+    .feature-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .feature-text {
+      font-size: 14px;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1024px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .course-title {
+        font-size: 32px;
+      }
+
+      .lesson-actions {
+        flex-direction: column;
+      }
+    }
+
+    .puzzle-footer {
+      background: #1e293b;
+      border-radius: 20px;
+      padding: 30px;
+      margin-top: 25px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .puzzle-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #334155;
+    }
+
+    .puzzle-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #fbbf24;
+      margin: 0;
+    }
+
+    .puzzle-score {
+      font-size: 18px;
+      font-weight: 700;
+      color: #10b981;
+    }
+
+    .puzzle-progress {
+      background: #0f172a;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 2px solid #10b981;
+    }
+
+    .puzzle-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    .puzzle-left {
+      background: #0f172a;
+      border-radius: 15px;
+      padding: 25px;
+      border: 2px solid #334155;
+    }
+
+    .puzzle-instruction {
+      font-size: 20px;
+      font-weight: 700;
+      color: #3b82f6;
+      margin: 0 0 10px 0;
+    }
+
+    .puzzle-description {
+      font-size: 14px;
+      color: #94a3b8;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .code-pieces-available {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .code-piece {
+      background: #1e293b;
+      border: 2px solid #475569;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-family: 'Fira Code', monospace;
+      font-size: 14px;
+      color: #e2e8f0;
+      cursor: grab;
+      transition: all 0.3s;
+      user-select: none;
+    }
+
+    .code-piece:hover {
+      border-color: #3b82f6;
+      transform: translateX(5px);
+    }
+
+    .code-piece.dragging {
+      opacity: 0.5;
+      cursor: grabbing;
+    }
+
+    .code-piece.placed {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .puzzle-right {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .snake-image-container {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+      border-radius: 15px;
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      border: 3px solid #334155;
+      min-height: 120px;
+      flex-wrap: wrap;
+    }
+
+    .snake-part {
+      font-size: 48px;
+      transition: all 0.5s;
+      filter: grayscale(100%);
+      opacity: 0.3;
+    }
+
+    .snake-part.unlocked {
+      filter: grayscale(0%);
+      opacity: 1;
+      animation: snakeUnlock 0.6s ease;
+    }
+
+    @keyframes snakeUnlock {
+      0% {
+        transform: scale(0) rotate(-180deg);
+      }
+      50% {
+        transform: scale(1.3) rotate(10deg);
+      }
+      100% {
+        transform: scale(1) rotate(0deg);
+      }
+    }
+
+    .snake-head {
+      font-size: 56px;
+    }
+
+    .snake-tail {
+      font-size: 44px;
+    }
+
+    .drop-zone {
+      background: #0f172a;
+      border-radius: 15px;
+      padding: 20px;
+      border: 2px dashed #475569;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .drop-slot {
+      background: #1e293b;
+      border: 2px solid #334155;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: 'Fira Code', monospace;
+      font-size: 14px;
+      color: #64748b;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      transition: all 0.3s;
+    }
+
+    .drop-slot.drag-over {
+      border-color: #3b82f6;
+      background: #1e3a5f;
+    }
+
+    .drop-slot.filled {
+      background: #1e293b;
+      color: #e2e8f0;
+      border-color: #3b82f6;
+    }
+
+    .drop-slot.correct {
+      background: #065f46;
+      border-color: #10b981;
+      color: #d1fae5;
+    }
+
+    .drop-slot.wrong {
+      background: #7f1d1d;
+      border-color: #ef4444;
+      color: #fecaca;
+    }
+
+    .puzzle-check-btn {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .puzzle-complete-message {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-radius: 12px;
+      padding: 25px;
+      text-align: center;
+      margin-top: 20px;
+      animation: celebrationPulse 1s ease infinite;
+    }
+
+    .puzzle-complete-message h3 {
+      font-size: 32px;
+      color: white;
+      margin: 0 0 10px 0;
+    }
+
+    .puzzle-complete-message p {
+      font-size: 16px;
+      color: #d1fae5;
+      margin: 0;
+    }
+
+    @keyframes celebrationPulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.02);
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .puzzle-container {
+        grid-template-columns: 1fr;
+      }
+
+      .snake-image-container {
+        order: -1;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="course-wrapper">
+   <div class="course-container">
+    <header class="header-section">
+     <h1 class="course-title" id="course-title">🐍 Curso Interativo de Python</h1>
+     <p class="course-subtitle" id="course-subtitle">Aprenda Python comparando com JavaScript</p>
+    </header>
+    <div class="progress-bar-section">
+     <div class="progress-info"><span>Progresso do Curso</span> <span id="progress-text">0 de 10 lições completadas</span>
+     </div>
+     <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progress-bar"></div>
+     </div>
+    </div>
+    <div class="content-grid">
+     <aside class="sidebar">
+      <h2 class="sidebar-title">📚 Módulos</h2>
+      <ul class="lesson-list" id="lesson-list"></ul>
+     </aside>
+     <main class="main-content" id="main-content"><!-- Content will be loaded here -->
+     </main>
+    </div>
+    <footer class="puzzle-footer">
+     <div class="puzzle-header">
+      <h3 class="puzzle-title" id="puzzle-level-title">🧩 Quebra-Cabeça de Código Python</h3>
+      <div class="puzzle-score"><span class="puzzle-progress" style="margin-right: 15px;">Fase <span id="current-level">1</span>/20</span> <span class="puzzle-progress"><span id="puzzle-progress">0</span>/6 Peças Corretas</span>
+      </div>
+     </div>
+     <div class="puzzle-container">
+      <div class="puzzle-left">
+       <h4 class="puzzle-instruction" id="puzzle-instruction">🎯 Monte o código na ordem correta!</h4>
+       <p class="puzzle-description" id="puzzle-description">Arraste as peças de código para as posições corretas</p>
+       <div class="code-pieces-available" id="available-pieces"><!-- Peças disponíveis -->
+       </div>
+      </div>
+      <div class="puzzle-right">
+       <div class="snake-image-container" id="snake-container">
+        <div class="snake-part snake-head" id="piece-0">
+         🔒
+        </div>
+        <div class="snake-part snake-body" id="piece-1">
+         🔒
+        </div>
+        <div class="snake-part snake-body" id="piece-2">
+         🔒
+        </div>
+        <div class="snake-part snake-body" id="piece-3">
+         🔒
+        </div>
+        <div class="snake-part snake-body" id="piece-4">
+         🔒
+        </div>
+        <div class="snake-part snake-tail" id="piece-5">
+         🔒
+        </div>
+       </div>
+       <div class="drop-zone" id="drop-zone">
+        <div class="drop-slot" data-position="0">
+         1️⃣ Primeira linha
+        </div>
+        <div class="drop-slot" data-position="1">
+         2️⃣ Segunda linha
+        </div>
+        <div class="drop-slot" data-position="2">
+         3️⃣ Terceira linha
+        </div>
+        <div class="drop-slot" data-position="3">
+         4️⃣ Quarta linha
+        </div>
+        <div class="drop-slot" data-position="4">
+         5️⃣ Quinta linha
+        </div>
+        <div class="drop-slot" data-position="5">
+         6️⃣ Sexta linha
+        </div>
+       </div><button class="btn btn-primary puzzle-check-btn" onclick="checkPuzzleSolution()" id="check-puzzle-btn"> ✅ Verificar Solução </button>
+      </div>
+     </div>
+    </footer>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      course_title: "🐍 Curso Interativo de Python",
+      course_subtitle: "Aprenda Python comparando com JavaScript",
+      welcome_text: "Bem-vindo ao curso mais interativo de Python!"
+    };
+
+    const lessons = [
+      {
+        id: "lesson1",
+        title: "Introdução ao Python",
+        description: "Entenda o que é Python e suas principais características",
+        content: {
+          explanation: "Python é uma linguagem de programação de alto nível, interpretada e com tipagem dinâmica, conhecida por sua sintaxe clara e legível.",
+          comparison: {
+            python: `# Python - Primeiro programa
+print("Olá, Mundo!")
+
+# Variáveis em Python
+nome = "João"
+idade = 25
+ativo = True`,
+            javascript: `// JavaScript - Primeiro programa
+console.log("Olá, Mundo!");
+
+// Variáveis em JavaScript
+let nome = "João";
+let idade = 25;
+let ativo = true;`
+          },
+          keyPoints: [
+            "Python usa indentação obrigatória para delimitar blocos",
+            "JavaScript usa chaves { } para delimitar blocos",
+            "Python não precisa de ponto e vírgula",
+            "Python usa snake_case; JavaScript usa camelCase"
+          ]
+        }
+      },
+      {
+        id: "lesson2",
+        title: "Tipos de Dados",
+        description: "Conheça os tipos primitivos e estruturas básicas",
+        content: {
+          explanation: "Ambas as linguagens possuem tipos de dados similares, mas com algumas diferenças importantes.",
+          comparison: {
+            python: `# Tipos em Python
+numero = 42
+texto = "Python"
+lista = [1, 2, 3]
+dicionario = {"chave": "valor"}
+
+# Verificar tipo
+print(type(numero))`,
+            javascript: `// Tipos em JavaScript
+let numero = 42;
+let texto = "JavaScript";
+let array = [1, 2, 3];
+let objeto = {chave: "valor"};
+
+// Verificar tipo
+console.log(typeof numero);`
+          },
+          keyPoints: [
+            "Python tem int e float separados; JS só tem number",
+            "Dicionários Python são como objetos JavaScript",
+            "Python tem True/False; JS tem true/false",
+            "Python tem tuplas imutáveis"
+          ]
+        }
+      },
+      {
+        id: "lesson3",
+        title: "Operadores",
+        description: "Aprenda operadores aritméticos e lógicos",
+        content: {
+          explanation: "Os operadores são muito similares, mas Python oferece alguns exclusivos.",
+          comparison: {
+            python: `# Operadores Python
+soma = 10 + 5
+divisao_inteira = 10 // 3
+potencia = 2 ** 3
+
+# Lógicos
+e_logico = True and False
+ou_logico = True or False`,
+            javascript: `// Operadores JavaScript
+let soma = 10 + 5;
+let divisao = Math.floor(10 / 3);
+let potencia = 2 ** 3;
+
+// Lógicos
+let eLogico = true && false;
+let ouLogico = true || false;`
+          },
+          keyPoints: [
+            "Python usa 'and', 'or', 'not'",
+            "JavaScript usa '&&', '||', '!'",
+            "Python tem // para divisão inteira",
+            "Ambos têm ** para potência"
+          ]
+        }
+      },
+      {
+        id: "lesson4",
+        title: "Estruturas Condicionais",
+        description: "if, else, elif - tomando decisões",
+        content: {
+          explanation: "Ambas linguagens usam if/else, mas Python usa 'elif'.",
+          comparison: {
+            python: `# Condicionais em Python
+idade = 18
+
+if idade < 18:
+    print("Menor")
+elif idade == 18:
+    print("18 anos")
+else:
+    print("Maior")`,
+            javascript: `// Condicionais em JavaScript
+let idade = 18;
+
+if (idade < 18) {
+    console.log("Menor");
+} else if (idade === 18) {
+    console.log("18 anos");
+} else {
+    console.log("Maior");
+}`
+          },
+          keyPoints: [
+            "Python usa 'elif'; JS usa 'else if'",
+            "Python usa : e indentação",
+            "JavaScript usa () e {}",
+            "Ambos têm operador ternário"
+          ]
+        }
+      },
+      {
+        id: "lesson5",
+        title: "Estruturas de Repetição",
+        description: "for e while - repetindo ações",
+        content: {
+          explanation: "Loops são fundamentais. Python e JavaScript têm abordagens diferentes.",
+          comparison: {
+            python: `# Loops em Python
+for i in range(5):
+    print(i)
+
+frutas = ["maçã", "banana"]
+for fruta in frutas:
+    print(fruta)
+
+contador = 0
+while contador < 5:
+    print(contador)
+    contador += 1`,
+            javascript: `// Loops em JavaScript
+for (let i = 0; i < 5; i++) {
+    console.log(i);
+}
+
+let frutas = ["maçã", "banana"];
+for (let fruta of frutas) {
+    console.log(fruta);
+}
+
+let contador = 0;
+while (contador < 5) {
+    console.log(contador);
+    contador++;
+}`
+          },
+          keyPoints: [
+            "Python: 'for item in collection'",
+            "JavaScript: for tradicional (i = 0...)",
+            "JS tem for...of para valores",
+            "Python tem range() para sequências"
+          ]
+        }
+      },
+      {
+        id: "lesson6",
+        title: "Funções",
+        description: "Criando e usando funções",
+        content: {
+          explanation: "Funções permitem reutilizar código com sintaxes diferentes.",
+          comparison: {
+            python: `# Funções em Python
+def saudacao(nome):
+    return f"Olá, {nome}!"
+
+def soma(a, b=0):
+    return a + b
+
+print(saudacao("Maria"))
+print(soma(5, 3))
+
+# Lambda
+quadrado = lambda x: x ** 2`,
+            javascript: `// Funções em JavaScript
+function saudacao(nome) {
+    return \`Olá, \${nome}!\`;
+}
+
+function soma(a, b = 0) {
+    return a + b;
+}
+
+console.log(saudacao("Maria"));
+console.log(soma(5, 3));
+
+// Arrow function
+const quadrado = (x) => x ** 2;`
+          },
+          keyPoints: [
+            "Python usa 'def'; JS usa 'function'",
+            "Python tem f-strings; JS tem template literals",
+            "Python tem lambda; JS tem arrow functions",
+            "Ambos suportam valores padrão"
+          ]
+        }
+      },
+      {
+        id: "lesson7",
+        title: "Listas e Arrays",
+        description: "Trabalhando com coleções",
+        content: {
+          explanation: "Listas Python e Arrays JavaScript são estruturas similares.",
+          comparison: {
+            python: `# Listas Python
+numeros = [1, 2, 3, 4, 5]
+
+numeros.append(6)
+numeros.insert(0, 0)
+numeros.remove(3)
+numeros.pop()
+
+# List comprehension
+quadrados = [x**2 for x in range(5)]
+
+sublista = numeros[1:4]`,
+            javascript: `// Arrays JavaScript
+let numeros = [1, 2, 3, 4, 5];
+
+numeros.push(6);
+numeros.unshift(0);
+numeros.splice(2, 1);
+numeros.pop();
+
+// Map
+let quadrados = [0,1,2,3,4].map(x => x**2);
+
+let subarray = numeros.slice(1, 4);`
+          },
+          keyPoints: [
+            "Python: append(), insert(), remove()",
+            "JS: push(), unshift(), splice()",
+            "List comprehension é poderoso",
+            "JS tem map(), filter(), reduce()"
+          ]
+        }
+      },
+      {
+        id: "lesson8",
+        title: "Dicionários e Objetos",
+        description: "Estruturas chave-valor",
+        content: {
+          explanation: "Dicionários Python e Objetos JavaScript armazenam pares chave-valor.",
+          comparison: {
+            python: `# Dicionários Python
+pessoa = {
+    "nome": "Ana",
+    "idade": 30,
+    "cidade": "São Paulo"
+}
+
+print(pessoa["nome"])
+print(pessoa.get("idade"))
+
+pessoa["profissao"] = "Engenheira"
+
+for chave, valor in pessoa.items():
+    print(f"{chave}: {valor}")`,
+            javascript: `// Objetos JavaScript
+let pessoa = {
+    nome: "Ana",
+    idade: 30,
+    cidade: "São Paulo"
+};
+
+console.log(pessoa.nome);
+console.log(pessoa["idade"]);
+
+pessoa.profissao = "Engenheira";
+
+for (let [chave, valor] of Object.entries(pessoa)) {
+    console.log(\`\${chave}: \${valor}\`);
+}`
+          },
+          keyPoints: [
+            "Python usa aspas nas chaves",
+            "JS não precisa de aspas",
+            "Python: .items(), .keys(), .values()",
+            "JS: Object.entries(), Object.keys()"
+          ]
+        }
+      },
+      {
+        id: "lesson9",
+        title: "Classes e POO",
+        description: "Programação Orientada a Objetos",
+        content: {
+          explanation: "Ambas suportam POO, mas com sintaxes diferentes.",
+          comparison: {
+            python: `# Classes em Python
+class Carro:
+    def __init__(self, marca, modelo):
+        self.marca = marca
+        self.modelo = modelo
+        self.velocidade = 0
+    
+    def acelerar(self, incremento):
+        self.velocidade += incremento
+    
+    def info(self):
+        return f"{self.marca} {self.modelo}"
+
+meu_carro = Carro("Toyota", "Corolla")
+meu_carro.acelerar(50)`,
+            javascript: `// Classes em JavaScript
+class Carro {
+    constructor(marca, modelo) {
+        this.marca = marca;
+        this.modelo = modelo;
+        this.velocidade = 0;
+    }
+    
+    acelerar(incremento) {
+        this.velocidade += incremento;
+    }
+    
+    info() {
+        return \`\${this.marca} \${this.modelo}\`;
+    }
+}
+
+let meuCarro = new Carro("Toyota", "Corolla");
+meuCarro.acelerar(50);`
+          },
+          keyPoints: [
+            "Python usa __init__; JS usa constructor",
+            "Python usa 'self'; JS usa 'this'",
+            "Ambos usam 'class'",
+            "Herança funciona similar"
+          ]
+        }
+      },
+      {
+        id: "lesson10",
+        title: "Módulos e Imports",
+        description: "Organizando código",
+        content: {
+          explanation: "Módulos permitem organizar código em arquivos separados.",
+          comparison: {
+            python: `# Python - Importando
+import math
+print(math.sqrt(16))
+
+from math import sqrt, pi
+print(sqrt(16))
+
+import datetime as dt
+hoje = dt.date.today()`,
+            javascript: `// JavaScript - Importando
+const math = require('math');
+const {sqrt, PI} = require('math');
+
+// ES6 Modules
+import math from 'math';
+import {sqrt, PI} from 'math';
+
+import * as dt from 'date-fns';`
+          },
+          keyPoints: [
+            "Python: 'import' e 'from...import'",
+            "JS: 'import/require'",
+            "Python tem biblioteca padrão rica",
+            "JS tem NPM com milhões de pacotes"
+          ]
+        }
+      }
+    ];
+
+    let allUserData = [];
+    let currentLessonId = null;
+
+    const dataHandler = {
+      onDataChanged(data) {
+        allUserData = data;
+        updateProgress();
+        renderLessonList();
+      }
+    };
+
+    async function initDataSdk() {
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          console.error("Erro ao inicializar Data SDK");
+        }
+      }
+    }
+
+    function updateProgress() {
+      const completedLessons = allUserData.filter(l => l.completed).length;
+      const totalLessons = lessons.length;
+      const percentage = (completedLessons / totalLessons) * 100;
+
+      document.getElementById('progress-text').textContent = 
+        `${completedLessons} de ${totalLessons} lições completadas`;
+      document.getElementById('progress-bar').style.width = percentage + '%';
+    }
+
+    function renderLessonList() {
+      const listElement = document.getElementById('lesson-list');
+      
+      listElement.innerHTML = lessons.map(lesson => {
+        const completed = allUserData.find(l => l.lesson_id === lesson.id && l.completed);
+        const isActive = currentLessonId === lesson.id;
+        
+        return `
+          <li class="lesson-item">
+            <button 
+              class="lesson-btn ${isActive ? 'active' : ''} ${completed ? 'completed' : ''}"
+              onclick="loadLesson('${lesson.id}')"
+            >
+              <span>${lesson.title}</span>
+              <span class="lesson-status">${completed ? '✅' : '📝'}</span>
+            </button>
+          </li>
+        `;
+      }).join('');
+    }
+
+    function loadLesson(lessonId) {
+      currentLessonId = lessonId;
+      const lesson = lessons.find(l => l.id === lessonId);
+      const completed = allUserData.find(l => l.lesson_id === lessonId && l.completed);
+      
+      const mainContent = document.getElementById('main-content');
+      
+      mainContent.innerHTML = `
+        <div class="lesson-header">
+          <h2 class="lesson-title">${lesson.title}</h2>
+          <p class="lesson-description">${lesson.description}</p>
+        </div>
+
+        <div class="explanation-box">
+          <h3 class="explanation-title">📖 Explicação</h3>
+          <p class="explanation-text">${lesson.content.explanation}</p>
+        </div>
+
+        <div class="comparison-grid">
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-language python-header">🐍 Python</span>
+            </div>
+            <div class="code-content">${lesson.content.comparison.python}</div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-language">�� JavaScript</span>
+            </div>
+            <div class="code-content">${lesson.content.comparison.javascript}</div>
+          </div>
+        </div>
+
+        <div class="key-points">
+          <h3 class="key-points-title">💡 Pontos-Chave</h3>
+          <ul class="key-points-list">
+            ${lesson.content.keyPoints.map(point => `
+              <li class="key-point-item">${point}</li>
+            `).join('')}
+          </ul>
+        </div>
+
+        <div class="lesson-actions">
+          ${!completed ? `
+            <button class="btn btn-primary" onclick="completeLesson('${lessonId}')" id="complete-btn">
+              ✅ Marcar como Concluída
+            </button>
+          ` : `
+            <button class="btn btn-primary" disabled>
+              ✓ Lição Concluída!
+            </button>
+          `}
+          ${getLessonIndex(lessonId) < lessons.length - 1 ? `
+            <button class="btn btn-secondary" onclick="loadNextLesson()">
+              Próxima Lição →
+            </button>
+          ` : ''}
+        </div>
+      `;
+
+      renderLessonList();
+    }
+
+    function getLessonIndex(lessonId) {
+      return lessons.findIndex(l => l.id === lessonId);
+    }
+
+    function loadNextLesson() {
+      const currentIndex = getLessonIndex(currentLessonId);
+      if (currentIndex < lessons.length - 1) {
+        loadLesson(lessons[currentIndex + 1].id);
+      }
+    }
+
+    async function completeLesson(lessonId) {
+      if (allUserData.length >= 999) {
+        showNotification('Limite de 999 registros atingido!', false);
+        return;
+      }
+
+      const completeBtn = document.getElementById('complete-btn');
+      if (completeBtn) {
+        completeBtn.disabled = true;
+        completeBtn.textContent = '⏳ Salvando...';
+      }
+
+      const result = await window.dataSdk.create({
+        lesson_id: lessonId,
+        completed: true,
+        completed_at: new Date().toISOString(),
+        quiz_score: 0
+      });
+
+      if (!result.isOk) {
+        if (completeBtn) {
+          completeBtn.disabled = false;
+          completeBtn.textContent = '��� Marcar como Concluída';
+        }
+        showNotification('Erro ao salvar progresso. Tente novamente.', false);
+      }
+    }
+
+    function showNotification(message, success = true) {
+      const notification = document.createElement('div');
+      notification.className = 'explanation-box';
+      notification.style.position = 'fixed';
+      notification.style.top = '20px';
+      notification.style.right = '20px';
+      notification.style.zIndex = '1000';
+      notification.style.borderLeftColor = success ? '#10b981' : '#ef4444';
+      notification.textContent = message;
+      
+      document.body.appendChild(notification);
+      setTimeout(() => notification.remove(), 3000);
+    }
+
+    function showWelcomeScreen() {
+      const mainContent = document.getElementById('main-content');
+      
+      mainContent.innerHTML = `
+        <div class="welcome-screen">
+          <div class="welcome-icon">🐍</div>
+          <h2 class="welcome-title" id="welcome-text">Bem-vindo ao Curso Interativo de Python!</h2>
+          <p class="welcome-description">
+            Este curso foi criado para você aprender Python de forma prática, comparando diretamente 
+            com JavaScript. Cada lição apresenta código lado a lado.
+          </p>
+
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">📚</div>
+              <h3 class="feature-title">10 Liç��es</h3>
+              <p class="feature-text">Do básico ao avançado</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🔄</div>
+              <h3 class="feature-title">Comparação</h3>
+              <p class="feature-text">Python e JavaScript lado a lado</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">✅</div>
+              <h3 class="feature-title">Progresso Salvo</h3>
+              <p class="feature-text">Acompanhe seu avanço</p>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" onclick="loadLesson('lesson1')" style="max-width: 400px; margin: 0 auto;">
+            🚀 Começar o Curso
+          </button>
+        </div>
+      `;
+    }
+
+    async function onConfigChange(config) {
+      document.getElementById('course-title').textContent = 
+        config.course_title || defaultConfig.course_title;
+      document.getElementById('course-subtitle').textContent = 
+        config.course_subtitle || defaultConfig.course_subtitle;
+      
+      const welcomeTextEl = document.getElementById('welcome-text');
+      if (welcomeTextEl) {
+        welcomeTextEl.textContent = config.welcome_text || defaultConfig.welcome_text;
+      }
+    }
+
+    async function init() {
+      await initDataSdk();
+      
+      renderLessonList();
+      showWelcomeScreen();
+      initPuzzle();
+
+      if (window.elementSdk) {
+        await window.elementSdk.init({
+          defaultConfig: defaultConfig,
+          onConfigChange: onConfigChange,
+          mapToCapabilities: (config) => ({
+            recolorables: [],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (config) => new Map([
+            ["course_title", config.course_title || defaultConfig.course_title],
+            ["course_subtitle", config.course_subtitle || defaultConfig.course_subtitle],
+            ["welcome_text", config.welcome_text || defaultConfig.welcome_text]
+          ])
+        });
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', init);
+
+    // Puzzle Logic - 20 Fases Épicas!
+    const puzzleLevels = [
+      {
+        level: 1,
+        title: "🌟 Fase 1: Loop Básico",
+        description: "Monte um loop simples que imprime números de 1 a 5",
+        pieces: [
+          { id: 0, code: "# Programa que imprime 1 a 5", correctPosition: 0 },
+          { id: 1, code: "for i in range(1, 6):", correctPosition: 1 },
+          { id: 2, code: "    print(i)", correctPosition: 2 },
+          { id: 3, code: "# Fim do loop", correctPosition: 3 },
+          { id: 4, code: "print('Concluído!')", correctPosition: 4 },
+          { id: 5, code: "# Python é incrível! 🐍", correctPosition: 5 }
+        ],
+        snake: ['🐍', '🟢', '🟢', '🟢', '🟢', '🟩']
+      },
+      {
+        level: 2,
+        title: "⭐ Fase 2: Função Simples",
+        description: "Monte uma função que calcula o dobro de um número",
+        pieces: [
+          { id: 0, code: "# Função dobro", correctPosition: 0 },
+          { id: 1, code: "def dobro(x):", correctPosition: 1 },
+          { id: 2, code: "    return x * 2", correctPosition: 2 },
+          { id: 3, code: "# Testando a função", correctPosition: 3 },
+          { id: 4, code: "resultado = dobro(5)", correctPosition: 4 },
+          { id: 5, code: "print(resultado)", correctPosition: 5 }
+        ],
+        snake: ['🐍', '🟡', '🟡', '🟡', '🟡', '🟧']
+      },
+      {
+        level: 3,
+        title: "💫 Fase 3: Lista e Iteração",
+        description: "Monte um código que itera sobre uma lista de frutas",
+        pieces: [
+          { id: 0, code: "# Lista de frutas", correctPosition: 0 },
+          { id: 1, code: "frutas = ['maçã', 'banana', 'uva']", correctPosition: 1 },
+          { id: 2, code: "for fruta in frutas:", correctPosition: 2 },
+          { id: 3, code: "    print(f'Eu gosto de {fruta}')", correctPosition: 3 },
+          { id: 4, code: "# Lista completa", correctPosition: 4 },
+          { id: 5, code: "print(f'Total: {len(frutas)}')", correctPosition: 5 }
+        ],
+        snake: ['🐍', '🔵', '🔵', '🔵', '🔵', '🟦']
+      },
+      {
+        level: 4,
+        title: "✨ Fase 4: Condicional",
+        description: "Monte um código com estrutura if-elif-else",
+        pieces: [
+          { id: 0, code: "# Verifica idade", correctPosition: 0 },
+          { id: 1, code: "idade = 18", correctPosition: 1 },
+          { id: 2, code: "if idade < 18:", correctPosition: 2 },
+          { id: 3, code: "    print('Menor de idade')", correctPosition: 3 },
+          { id: 4, code: "else:", correctPosition: 4 },
+          { id: 5, code: "    print('Maior de idade')", correctPosition: 5 }
+        ],
+        snake: ['🐍', '🟣', '🟣', '🟣', '🟣', '🟪']
+      },
+      {
+        level: 5,
+        title: "🌟 Fase 5: Dicionário",
+        description: "Monte um código que trabalha com dicionários",
+        pieces: [
+          { id: 0, code: "# Criando dicionário", correctPosition: 0 },
+          { id: 1, code: "pessoa = {'nome': 'Ana', 'idade': 25}", correctPosition: 1 },
+          { id: 2, code: "# Acessando valores", correctPosition: 2 },
+          { id: 3, code: "print(pessoa['nome'])", correctPosition: 3 },
+          { id: 4, code: "# Adicionando chave", correctPosition: 4 },
+          { id: 5, code: "pessoa['cidade'] = 'São Paulo'", correctPosition: 5 }
+        ],
+        snake: ['🐍', '🔴', '🔴', '🔴', '🔴', '🟥']
+      },
+      {
+        level: 6,
+        title: "🏆 Fase 6: List Comprehension",
+        description: "Monte um código com list comprehension avançado",
+        pieces: [
+          { id: 0, code: "# Números de 0 a 9", correctPosition: 0 },
+          { id: 1, code: "numeros = list(range(10))", correctPosition: 1 },
+          { id: 2, code: "# Quadrados dos pares", correctPosition: 2 },
+          { id: 3, code: "pares = [x**2 for x in numeros", correctPosition: 3 },
+          { id: 4, code: "         if x % 2 == 0]", correctPosition: 4 },
+          { id: 5, code: "print(pares)", correctPosition: 5 }
+        ],
+        snake: ['🐍', '🟠', '🟠', '🟠', '🟠', '🟧']
+      },
+      {
+        level: 7,
+        title: "🎯 Fase 7: Classe Simples",
+        description: "Monte uma classe Python com construtor e método",
+        pieces: [
+          { id: 0, code: "# Classe Cachorro", correctPosition: 0 },
+          { id: 1, code: "class Cachorro:", correctPosition: 1 },
+          { id: 2, code: "    def __init__(self, nome):", correctPosition: 2 },
+          { id: 3, code: "        self.nome = nome", correctPosition: 3 },
+          { id: 4, code: "    def latir(self):", correctPosition: 4 },
+          { id: 5, code: "        print(f'{self.nome} faz: Au au!')", correctPosition: 5 }
+        ],
+        snake: ['🐍', '🟤', '🟤', '🟤', '🟤', '🟫']
+      },
+      {
+        level: 8,
+        title: "💎 Fase 8: Try-Except",
+        description: "Monte um código com tratamento de exceções",
+        pieces: [
+          { id: 0, code: "# Tratamento de erro", correctPosition: 0 },
+          { id: 1, code: "try:", correctPosition: 1 },
+          { id: 2, code: "    numero = int(input('Digite:'))", correctPosition: 2 },
+          { id: 3, code: "    print(10 / numero)", correctPosition: 3 },
+          { id: 4, code: "except ValueError:", correctPosition: 4 },
+          { id: 5, code: "    print('Número inválido!')", correctPosition: 5 }
+        ],
+        snake: ['🐍', '⚫', '⚫', '⚫', '⚫', '⬛']
+      },
+      {
+        level: 9,
+        title: "🌈 Fase 9: While Loop",
+        description: "Monte um loop while com contador",
+        pieces: [
+          { id: 0, code: "# Loop while", correctPosition: 0 },
+          { id: 1, code: "contador = 0", correctPosition: 1 },
+          { id: 2, code: "while contador < 5:", correctPosition: 2 },
+          { id: 3, code: "    print(f'Contagem: {contador}')", correctPosition: 3 },
+          { id: 4, code: "    contador += 1", correctPosition: 4 },
+          { id: 5, code: "print('Loop finalizado!')", correctPosition: 5 }
+        ],
+        snake: ['🐍', '💚', '💚', '💚', '💚', '💚']
+      },
+      {
+        level: 10,
+        title: "🔥 Fase 10: Lambda Function",
+        description: "Monte funções lambda com map",
+        pieces: [
+          { id: 0, code: "# Lambda e map", correctPosition: 0 },
+          { id: 1, code: "numeros = [1, 2, 3, 4, 5]", correctPosition: 1 },
+          { id: 2, code: "# Dobrar valores", correctPosition: 2 },
+          { id: 3, code: "dobrados = list(map(", correctPosition: 3 },
+          { id: 4, code: "    lambda x: x * 2, numeros))", correctPosition: 4 },
+          { id: 5, code: "print(dobrados)", correctPosition: 5 }
+        ],
+        snake: ['🐍', '💛', '💛', '💛', '💛', '💛']
+      },
+      {
+        level: 11,
+        title: "⚡ Fase 11: Filter Function",
+        description: "Use filter para filtrar números pares",
+        pieces: [
+          { id: 0, code: "# Filtrar números pares", correctPosition: 0 },
+          { id: 1, code: "numeros = range(1, 11)", correctPosition: 1 },
+          { id: 2, code: "# Apenas pares", correctPosition: 2 },
+          { id: 3, code: "pares = list(filter(", correctPosition: 3 },
+          { id: 4, code: "    lambda x: x % 2 == 0, numeros))", correctPosition: 4 },
+          { id: 5, code: "print(pares)", correctPosition: 5 }
+        ],
+        snake: ['🐍', '💙', '💙', '💙', '💙', '💙']
+      },
+      {
+        level: 12,
+        title: "🎨 Fase 12: Herança de Classe",
+        description: "Monte uma classe que herda de outra",
+        pieces: [
+          { id: 0, code: "# Herança", correctPosition: 0 },
+          { id: 1, code: "class Animal:", correctPosition: 1 },
+          { id: 2, code: "    def som(self): pass", correctPosition: 2 },
+          { id: 3, code: "class Gato(Animal):", correctPosition: 3 },
+          { id: 4, code: "    def som(self):", correctPosition: 4 },
+          { id: 5, code: "        return 'Miau!'", correctPosition: 5 }
+        ],
+        snake: ['🐍', '💜', '💜', '💜', '💜', '💜']
+      },
+      {
+        level: 13,
+        title: "🌟 Fase 13: Enumerate",
+        description: "Use enumerate para índice e valor",
+        pieces: [
+          { id: 0, code: "# Enumerate", correctPosition: 0 },
+          { id: 1, code: "cores = ['vermelho', 'azul', 'verde']", correctPosition: 1 },
+          { id: 2, code: "# Índice e valor", correctPosition: 2 },
+          { id: 3, code: "for i, cor in enumerate(cores):", correctPosition: 3 },
+          { id: 4, code: "    print(f'{i}: {cor}')", correctPosition: 4 },
+          { id: 5, code: "# Fim da iteração", correctPosition: 5 }
+        ],
+        snake: ['🐍', '🧡', '🧡', '🧡', '🧡', '🧡']
+      },
+      {
+        level: 14,
+        title: "💫 Fase 14: Zip Function",
+        description: "Combine listas com zip",
+        pieces: [
+          { id: 0, code: "# Combinar listas com zip", correctPosition: 0 },
+          { id: 1, code: "nomes = ['Ana', 'João', 'Maria']", correctPosition: 1 },
+          { id: 2, code: "idades = [25, 30, 22]", correctPosition: 2 },
+          { id: 3, code: "for nome, idade in zip(nomes, idades):", correctPosition: 3 },
+          { id: 4, code: "    print(f'{nome} tem {idade} anos')", correctPosition: 4 },
+          { id: 5, code: "# Combinação completa", correctPosition: 5 }
+        ],
+        snake: ['🐍', '🤍', '🤍', '🤍', '🤍', '🤍']
+      },
+      {
+        level: 15,
+        title: "🚀 Fase 15: Set Operations",
+        description: "Trabalhe com conjuntos (sets)",
+        pieces: [
+          { id: 0, code: "# Operações com sets", correctPosition: 0 },
+          { id: 1, code: "a = {1, 2, 3, 4}", correctPosition: 1 },
+          { id: 2, code: "b = {3, 4, 5, 6}", correctPosition: 2 },
+          { id: 3, code: "# União e interseção", correctPosition: 3 },
+          { id: 4, code: "print(a | b)  # União", correctPosition: 4 },
+          { id: 5, code: "print(a & b)  # Interseção", correctPosition: 5 }
+        ],
+        snake: ['🐍', '🤎', '🤎', '🤎', '🤎', '🤎']
+      },
+      {
+        level: 16,
+        title: "🎯 Fase 16: Decoradores",
+        description: "Monte um decorador simples",
+        pieces: [
+          { id: 0, code: "# Decorador simples", correctPosition: 0 },
+          { id: 1, code: "def maiuscula(func):", correctPosition: 1 },
+          { id: 2, code: "    def wrapper():", correctPosition: 2 },
+          { id: 3, code: "        return func().upper()", correctPosition: 3 },
+          { id: 4, code: "    return wrapper", correctPosition: 4 },
+          { id: 5, code: "# Decorador pronto!", correctPosition: 5 }
+        ],
+        snake: ['🐍', '❤️', '❤️', '❤️', '❤️', '❤️']
+      },
+      {
+        level: 17,
+        title: "🌠 Fase 17: Context Manager",
+        description: "Use context manager com with",
+        pieces: [
+          { id: 0, code: "# Context manager", correctPosition: 0 },
+          { id: 1, code: "# Simulando arquivo", correctPosition: 1 },
+          { id: 2, code: "class Arquivo:", correctPosition: 2 },
+          { id: 3, code: "    def __enter__(self): return self", correctPosition: 3 },
+          { id: 4, code: "    def __exit__(self, *args): pass", correctPosition: 4 },
+          { id: 5, code: "# Pronto para usar!", correctPosition: 5 }
+        ],
+        snake: ['🐍', '🩷', '🩷', '🩷', '🩷', '🩷']
+      },
+      {
+        level: 18,
+        title: "⚡ Fase 18: Generators",
+        description: "Monte um generator com yield",
+        pieces: [
+          { id: 0, code: "# Generator function", correctPosition: 0 },
+          { id: 1, code: "def contador(max):", correctPosition: 1 },
+          { id: 2, code: "    n = 0", correctPosition: 2 },
+          { id: 3, code: "    while n < max:", correctPosition: 3 },
+          { id: 4, code: "        yield n", correctPosition: 4 },
+          { id: 5, code: "        n += 1", correctPosition: 5 }
+        ],
+        snake: ['🐍', '🩵', '🩵', '🩵', '🩵', '🩵']
+      },
+      {
+        level: 19,
+        title: "🏆 Fase 19: Property Decorator",
+        description: "Use @property para getters",
+        pieces: [
+          { id: 0, code: "# Property decorator", correctPosition: 0 },
+          { id: 1, code: "class Circulo:", correctPosition: 1 },
+          { id: 2, code: "    def __init__(self, raio):", correctPosition: 2 },
+          { id: 3, code: "        self._raio = raio", correctPosition: 3 },
+          { id: 4, code: "    @property", correctPosition: 4 },
+          { id: 5, code: "    def area(self): return 3.14*self._raio**2", correctPosition: 5 }
+        ],
+        snake: ['🐍', '💖', '💖', '💖', '💖', '💖']
+      },
+      {
+        level: 20,
+        title: "👑 FASE FINAL: Async/Await",
+        description: "Monte código assíncrono avançado!",
+        pieces: [
+          { id: 0, code: "# Programação assíncrona", correctPosition: 0 },
+          { id: 1, code: "import asyncio", correctPosition: 1 },
+          { id: 2, code: "async def tarefa():", correctPosition: 2 },
+          { id: 3, code: "    await asyncio.sleep(1)", correctPosition: 3 },
+          { id: 4, code: "    return 'Concluído!'", correctPosition: 4 },
+          { id: 5, code: "# Python Master! 🐍👑", correctPosition: 5 }
+        ],
+        snake: ['🐍', '👑', '⭐', '💎', '🏆', '✨']
+      }
+    ];
+
+    let currentLevel = 0;
+    let placedPieces = {};
+    let correctCount = 0;
+
+    function initPuzzle() {
+      loadLevel(currentLevel);
+      
+      // Setup drop zones
+      const dropSlots = document.querySelectorAll('.drop-slot');
+      dropSlots.forEach(slot => {
+        slot.addEventListener('dragover', handleDragOver);
+        slot.addEventListener('drop', handleDrop);
+        slot.addEventListener('dragleave', handleDragLeave);
+      });
+    }
+
+    function loadLevel(levelIndex) {
+      const level = puzzleLevels[levelIndex];
+      placedPieces = {};
+      correctCount = 0;
+      
+      // Atualizar título e descrição
+      document.getElementById('puzzle-level-title').textContent = level.title;
+      document.getElementById('puzzle-description').textContent = level.description;
+      document.getElementById('current-level').textContent = level.level;
+      document.getElementById('puzzle-progress').textContent = '0';
+      
+      // Resetar cobra
+      level.snake.forEach((emoji, index) => {
+        const snakePart = document.getElementById(`piece-${index}`);
+        if (snakePart) {
+          snakePart.textContent = '🔒';
+          snakePart.classList.remove('unlocked');
+        }
+      });
+      
+      // Limpar peças disponíveis
+      const availableContainer = document.getElementById('available-pieces');
+      availableContainer.innerHTML = '';
+      
+      // Embaralhar e adicionar peças
+      const shuffled = [...level.pieces].sort(() => Math.random() - 0.5);
+      
+      shuffled.forEach(piece => {
+        const pieceEl = document.createElement('div');
+        pieceEl.className = 'code-piece';
+        pieceEl.draggable = true;
+        pieceEl.dataset.pieceId = piece.id;
+        pieceEl.textContent = piece.code;
+        
+        pieceEl.addEventListener('dragstart', handleDragStart);
+        pieceEl.addEventListener('dragend', handleDragEnd);
+        
+        availableContainer.appendChild(pieceEl);
+      });
+      
+      // Limpar drop zones
+      const dropSlots = document.querySelectorAll('.drop-slot');
+      dropSlots.forEach((slot, index) => {
+        slot.classList.remove('filled', 'correct', 'wrong');
+        slot.textContent = `${index + 1}️⃣ ${['Primeira', 'Segunda', 'Terceira', 'Quarta', 'Quinta', 'Sexta'][index]} linha`;
+      });
+      
+      // Habilitar botão verificar
+      document.getElementById('check-puzzle-btn').disabled = true;
+      
+      // Remover mensagem de conclusão se existir
+      const completeMessage = document.querySelector('.puzzle-complete-message');
+      if (completeMessage) {
+        completeMessage.remove();
+      }
+    }
+
+    let draggedPiece = null;
+
+    function handleDragStart(e) {
+      if (e.target.classList.contains('placed')) return;
+      
+      draggedPiece = e.target;
+      e.target.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function handleDragEnd(e) {
+      e.target.classList.remove('dragging');
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      
+      if (!e.target.classList.contains('drop-slot')) return;
+      e.target.classList.add('drag-over');
+    }
+
+    function handleDragLeave(e) {
+      if (!e.target.classList.contains('drop-slot')) return;
+      e.target.classList.remove('drag-over');
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      
+      const slot = e.target.closest('.drop-slot');
+      if (!slot) return;
+      
+      slot.classList.remove('drag-over');
+      
+      const position = parseInt(slot.dataset.position);
+      const pieceId = parseInt(draggedPiece.dataset.pieceId);
+      
+      // Verificar se já tem peça nessa posição
+      if (placedPieces[position] !== undefined) {
+        const oldPieceId = placedPieces[position];
+        const oldPiece = document.querySelector(`.code-piece[data-piece-id="${oldPieceId}"]`);
+        if (oldPiece) {
+          oldPiece.classList.remove('placed');
+        }
+      }
+      
+      // Colocar nova peça
+      placedPieces[position] = pieceId;
+      slot.textContent = puzzlePieces[pieceId].code;
+      slot.classList.add('filled');
+      
+      draggedPiece.classList.add('placed');
+      draggedPiece = null;
+      
+      updatePuzzleProgress();
+    }
+
+    function updatePuzzleProgress() {
+      const filledCount = Object.keys(placedPieces).length;
+      document.getElementById('check-puzzle-btn').disabled = filledCount < 6;
+    }
+
+    function checkPuzzleSolution() {
+      const level = puzzleLevels[currentLevel];
+      const dropSlots = document.querySelectorAll('.drop-slot');
+      correctCount = 0;
+      
+      dropSlots.forEach((slot, index) => {
+        slot.classList.remove('correct', 'wrong', 'filled');
+        
+        const pieceId = placedPieces[index];
+        if (pieceId === undefined) return;
+        
+        const piece = level.pieces[pieceId];
+        
+        if (piece.correctPosition === index) {
+          slot.classList.add('correct');
+          correctCount++;
+          
+          // Desbloquear parte da cobra
+          const snakePart = document.getElementById(`piece-${index}`);
+          if (snakePart) {
+            snakePart.textContent = level.snake[index];
+            snakePart.classList.add('unlocked');
+          }
+        } else {
+          slot.classList.add('wrong');
+        }
+      });
+      
+      document.getElementById('puzzle-progress').textContent = correctCount;
+      
+      if (correctCount === 6) {
+        setTimeout(() => {
+          showPuzzleComplete();
+        }, 1000);
+      } else {
+        showNotification(`Você acertou ${correctCount} de 6 peças! Continue tentando! 🧩`, false);
+      }
+    }
+
+    function showPuzzleComplete() {
+      const puzzleRight = document.querySelector('.puzzle-right');
+      
+      const isLastLevel = currentLevel === puzzleLevels.length - 1;
+      
+      const completeMessage = document.createElement('div');
+      completeMessage.className = 'puzzle-complete-message';
+      
+      if (isLastLevel) {
+        completeMessage.innerHTML = `
+          <h3>🏆 PARABÉNS! VOCÊ COMPLETOU TODAS AS 20 FASES! 🏆</h3>
+          <p>Você é um VERDADEIRO MESTRE do Python! Completou TODAS as 20 fases épicas!</p>
+          <p style="margin-top: 10px; font-size: 64px;">🐍👑✨🎊💎</p>
+          <button class="btn btn-secondary" onclick="resetPuzzle()" style="margin-top: 15px; max-width: 300px;">
+            🔄 Recomeçar do Início
+          </button>
+        `;
+      } else {
+        completeMessage.innerHTML = `
+          <h3>🎉 Fase ${currentLevel + 1} Completa! 🎉</h3>
+          <p>Você montou o código Python corretamente!</p>
+          <p style="margin-top: 10px; font-size: 48px;">🐍✨</p>
+          <button class="btn btn-primary" onclick="nextLevel()" style="margin-top: 15px; max-width: 300px;">
+            ➡️ Próxima Fase (${currentLevel + 2}/20)
+          </button>
+        `;
+      }
+      
+      puzzleRight.appendChild(completeMessage);
+      
+      if (isLastLevel) {
+        showNotification('🏆 TODAS AS FASES COMPLETAS! Você é um mestre Python! 🐍👑', true);
+      } else {
+        showNotification(`🎊 Fase ${currentLevel + 1} completa! Pronto para a próxima? 🚀`, true);
+      }
+    }
+
+    function nextLevel() {
+      if (currentLevel < puzzleLevels.length - 1) {
+        currentLevel++;
+        loadLevel(currentLevel);
+        showNotification(`Fase ${currentLevel + 1} iniciada! Boa sorte! 🎯`, true);
+      }
+    }
+
+    function resetPuzzle() {
+      currentLevel = 0;
+      loadLevel(currentLevel);
+      showNotification('Recomeçando do início! Vamos lá! 🚀', true);
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a8d92c2e5fbe2ae',t:'MTc2NDg3NTEwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
